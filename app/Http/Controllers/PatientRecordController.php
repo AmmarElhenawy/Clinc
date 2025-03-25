@@ -1,0 +1,122 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\patientRecord;
+use App\Models\patients;
+use App\Models\doctor;
+
+use Illuminate\Http\Request;
+
+class PatientRecordController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $doctor=doctor::all();
+        // return view('records.records',compact('doctor'));
+        $patientRecord=patientRecord::all();
+        // $patients=patients::all();
+        return view('patients.patients_record',compact('patientRecord','doctor'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // إنشاء سجل في جدول المرضى وتخزينه في متغير لاسترجاع المعرف (id)
+        $patient = patients::create([
+            'patient_full_name' => $request->First_name . " " . $request->Last_name,
+            'address' => $request->Address,
+            'age' => $request->Age,
+            'phone_number' => $request->Phone_number,
+            'doctor_id' => $request->Doctor_id,
+        ]);
+
+        // إنشاء سجل في جدول سجلات المرضى وربطه بالمعرف الخاص بالمريض
+        patientRecord::create([
+            'patient_id' => $patient->id, // ربط السجل بالمريض
+            'weight' => $request->Weight,
+            'height' => $request->Height,
+            'medications' => $request->Medications,
+            'diet_plan' => $request->Diet_plan,
+            'diabetes_duration' => $request->Diabetes_duration,
+            'fasting_blood_sugar' => $request->Fasting_blood_sugar,
+            'post_meal_blood_sugar' => $request->Post_meal_blood_sugar,
+            'hba1c' =>  $request->Hba1c,
+            'kidney_function_tests'=>$request->Kidney_function_tests,
+            'retinal_examination' => $request->Retinal_examination,
+            'ecg' => $request->Ecg,
+            'numbness' => $request->Numbness,
+            'burning_sensation' => $request->Burning_sensation,
+            'tingling' => $request->Tingling,
+            'cold_extremities' => $request->Cold_extremities,
+            'muscle_cramps' => $request->Muscle_cramps,
+            'status' =>  $request->Status,
+            'value_status' => (int) $request->value_status,
+        ]);
+
+        session()->flash('add', 'تم اضافه المنتج بنجاح');
+        return redirect('patientsRecord');
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(patientRecord $patientRecord)
+    {
+        $doctor=doctor::all();
+        // return view('records.records',compact('doctor'));
+        $patientRecord=patientRecord::all();
+        return view('patients.add_patients',compact('patientRecord','doctor'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(patientRecord $patientRecord)
+    {
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, patientRecord $patientRecord)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(patientRecord $patientRecord)
+    {
+        //
+    }
+    public function showReEx()
+    {
+
+        $patientRecord=patientRecord::all();
+        return view('patients.reExamination',compact('patientRecord'));
+    }
+    public function toggleStatus($id)
+    {
+        $patient=patientRecord::FindOrFail($id);
+        $patient->value_status=$patient->value_status==1?0:1;//flip لو 1 رجع 0 والعكس
+        $patient->save();
+        return response()->json(['value_status' => $patient->value_status]);//استجابة JSON تحتوي على قيمة value_status بعد تحديثها.
+    }
+}
