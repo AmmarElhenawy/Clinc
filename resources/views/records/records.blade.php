@@ -41,8 +41,8 @@
                                 </span>
                             </div>
                             <div class="float-left">
-                                <p class="card-text text-muted mb-1">Income</p>
-                                <h3>21%</h3>
+                                <p class="card-text text-muted mb-1">حالات اليوم</p>
+                                <h3>{{$count2->all_patients}}</h3>
                             </div>
                         </div>
                         <div class="card-footer p-0">
@@ -133,7 +133,14 @@
                                                                         </td>
                                                                         <td>{{$doc->specialty}}</td>
                                                                         <td>{{$doc->phone_number}}</td>
-                                                                        <td>{{$doc->referred_casses}}</td>
+                                                                        {{-- <td>{{$doc->referred_casses}}</td> --}}
+                                                                        <td>
+                                                                            {{-- @php
+                                                                            $totalPatients = $count->firstWhere('doctor_id', $doc->id)->total_patients ?? 0;
+                                                                        @endphp --}}
+                                                                        {{-- firstWhere()ترجع أول عنصر مباشرةً الذي يطابق الشرط.لا تحتاج إلى first() لأنه مدمج داخله --}}
+                                                                        {{-- where هتعمل نفس الحاجه بس هتبعت البيانات كلها --}}
+                                                                        {{ $count->firstWhere('doctor_id',$doc->id)->total_patients??0 }}</td>
                                                                         <td>{{$doc->examined}}</td>
                                                                         <td>                                                                        <button
                                                                             class="toggleButton btn {{ $doc->value_status == 1 ? 'btn-success' : 'btn-danger' }}"data-id="{{ $doc->id }}">
