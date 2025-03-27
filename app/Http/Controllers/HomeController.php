@@ -41,10 +41,20 @@ class HomeController extends Controller
     ->get();
 
 
-        //عرض جميع الحالات
-        $count2= DB::table('patients')
+
+    //عرض جميع الحالات
+    $count2= DB::table('patients')
     ->select(DB::raw('COUNT(id) as all_patients'))
-    ->first();//عشان هي قيمه واحده بس
+    ->first();//عشان هي قيمه واحده بس //first() return object
+
+    //حالات تم الكشف
+        $EXcount = DB::table('patient_record')
+        ->where('value_status', 1) // تحديد القيم المطلوبة فقط
+        ->count();// بيرجع القيمه صحيحه علي طول count()
+
+        $transCount = DB::table('patients')
+        ->whereNotNull('doctor_id' ) //
+        ->count();// بيرجع القيمه صحيحه علي طول count()
 
 // foreach عشان يمر علي كل صف ويعمل التحديث
 foreach ($count as $co) {
@@ -56,9 +66,16 @@ foreach ($count as $co) {
 //مش هنحتاج لووب عشان هي قيمه ثابته ف كلو
 //تحديث
     DB::table('doctors')
-        ->update(['all_patients' => $count2->all_patients]);
+        ->update(['all_patients' => $count2->all_patients]);//->all_patients because its object
+
+        //حالات تم الكشف
+        DB::table('patients')
+        ->update(['examined_count' => $EXcount]);// بيرجع القيمه صحيحه علي طول count()
+
+        DB::table('patients')
+        ->update(['transfere_count'=>$transCount]);
 
 
-        return view('records.records',compact('doctor','count','count2'));
+        return view('records.records',compact('doctor','count','count2','EXcount','transCount'));
     }
 }

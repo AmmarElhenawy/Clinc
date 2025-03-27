@@ -43,6 +43,7 @@
                             <div class="float-left">
                                 <p class="card-text text-muted mb-1">حالات اليوم</p>
                                 <h3>{{$count2->all_patients}}</h3>
+                                {{-- //->all_patients because its object --}}
                             </div>
                         </div>
                         <div class="card-footer p-0">
@@ -58,17 +59,17 @@
                         <div class="clearfix">
                             <div class="float-right  mt-2">
                                 <span class="text-primary">
-                                    <i class="si si-social-facebook tx-30"></i>
+                                    <i class="si si-chart tx-30"></i>
                                 </span>
                             </div>
                             <div class="float-left">
-                                <p class="card-text text-muted mb-1">Followers</p>
-                                <h3>24K</h3>
+                                <p class="card-text text-muted mb-1"> تم الكشف</p>
+                                <h3>{{$EXcount}}</h3>
                             </div>
                         </div>
                         <div class="card-footer p-0">
-                            <p class="text-muted mb-0 pt-4"><i class="si si-check mr-1 text-primary mr-2"></i> Recent
-                                History</p>
+                            <p class="text-muted mb-0 pt-4"><i class="si si-exclamation text-info mr-2"></i>From Last Month
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -79,21 +80,22 @@
                         <div class="clearfix">
                             <div class="float-right  mt-2">
                                 <span class="text-primary">
-                                    <i class="si si-social-facebook tx-30"></i>
+                                    <i class="si si-chart tx-30"></i>
                                 </span>
                             </div>
                             <div class="float-left">
-                                <p class="card-text text-muted mb-1">Followers</p>
-                                <h3>24K</h3>
+                                <p class="card-text text-muted mb-1">حالات المحوله</p>
+                                <h3>{{$transCount}}</h3>
                             </div>
                         </div>
                         <div class="card-footer p-0">
-                            <p class="text-muted mb-0 pt-4"><i class="si si-check mr-1 text-primary mr-2"></i> Recent
-                                History</p>
+                            <p class="text-muted mb-0 pt-4"><i class="si si-exclamation text-info mr-2"></i>From Last Month
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header pb-0">
