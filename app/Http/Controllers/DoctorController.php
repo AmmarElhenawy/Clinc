@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\doctor;
+use App\Models\PatientRecord;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
+use App\Models\Patients;
 
 class DoctorController extends Controller
 {
@@ -12,6 +16,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
+
         $doctor=doctor::all();
         return view('doctors.doctors',compact('doctor'));
     }
@@ -67,9 +72,11 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(doctor $doctor)
+    public function show($id)
     {
-        //
+        $doctor=doctor::where('id',$id)->first();
+        return view('doctors.doctorDetails',compact('doctor'));
+
     }
 
     /**
@@ -137,5 +144,32 @@ class DoctorController extends Controller
     //     // session()-> flash('add','تم اضافه المنتج بنجاح');
     //     return redirect('doctors');
     // }
+    public function patientsDocRecord($id)
+    {
+        $doctor=doctor::all();
+        // $patient=Patients::where('doctor_id',$id)->get();
+        $patientRecord = PatientRecord::join('patients','patient_record.patient_id','=','patients.id')
+                ->where('patients.doctor_id','=',$id)
+                ->get();
+        return view('records.doctor_patients_record',compact('patientRecord','doctor'));
+    }
+    public function examinedDocRecord($id)
+    {
+        $doctor=doctor::all();
+        // $patient=Patients::where('doctor_id',$id)->get();
+        $patientRecord = PatientRecord::join('patients','patient_record.patient_id','=','patients.id')
+                ->where('patients.doctor_id','=',$id)
+                ->where('patient_record.value_status',1)
+                ->get();
+        $count=PatientRecord::join('patients','patient_record.patient_id','=','patients.id')
+        ->where('patients.doctor_id','=',$id)
+        ->where('patient_record.value_status',1)->count();
+
+        DB::table('doctors')
+        ->where('id',$id)
+        ->update(['examined'=>$count]);
+
+        return view('records.examined_doctor_records',compact('patientRecord','doctor'));
+    }
 
 }

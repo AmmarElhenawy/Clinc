@@ -24,8 +24,14 @@ Route::resource('doctors', DoctorController::class);
 
 Route::get('addPatients', [PatientRecordController::class,'show'])->name('addPatients');
 Route::get('reExamination', [PatientRecordController::class,'showReEx'])->name('reExamination');// X
-
 Route::get('showPatients', [PatientsController::class,'show'])->name('showPatients');
+Route::get('showExamined', [PatientRecordController::class,'showExamined'])->name('showExamined');
+Route::get('showTransfered', [PatientRecordController::class,'showTransfered'])->name('showTransfered');
+Route::get('showTodayRecords', [PatientRecordController::class,'showTodayRec'])->name('showTodayRec');
+Route::get('patientsDocRecord/{id}', [DoctorController::class,'patientsDocRecord'])->name('patientsDocRecord');
+Route::get('doctorDetails/{id}', [DoctorController::class,'show'])->name('doctorDetails');
+Route::get('examinedDoctorRecords/{id}', [DoctorController::class,'examinedDocRecord'])->name('examinedDocRecord');
+
 Route::get('patientDetails/{id}', [PatientsController::class,'showPatientDetails'])->name('patientDetails');
 Route::get('editPatients/{id}', [PatientsController::class,'edit'])->name('editPatients');
 Route::patch('patients/update/{id}', [PatientsController::class,'update'])->name('patients.update');

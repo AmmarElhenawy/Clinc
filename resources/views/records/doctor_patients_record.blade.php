@@ -26,16 +26,7 @@
                     </div>
                     <p class="tx-12 tx-gray-500 mb-2"></p>
                 </div>
-                <div class="col-sm-6 col-md-4 col-xl-3">
-                    <a href="{{ route('addPatients') }}" class="btn btn-outline-primary btn-block">
-                        كشف
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3">
-                    <a href="{{ route('showPatients') }}" class="btn btn-outline-primary btn-block">
-                        اعاده
-                    </a>
-                </div>
+
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table mg-b-0 text-md-nowrap">
@@ -61,7 +52,9 @@
                                                             <tr>
                                                                 <td>{{$i}}</td>
 
-                                                                <td>{{$pr->pat_id->patient_full_name}}</td>
+                                                                <td>
+                                                                    {{$pr->pat_id->patient_full_name}}
+                                                                </td>
                                                                 <td>{{$pr->height}}</td>
                                                                 <td>{{$pr->weight}}</td>
                                                                 {{-- <td>{{$doc->examined}}</td> --}}

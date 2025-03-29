@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use App\Models\doctor;
-
-
+use App\Models\PatientRecord;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -43,9 +43,15 @@ class HomeController extends Controller
 
 
     //عرض جميع الحالات
-    $count2= DB::table('patients')
-    ->select(DB::raw('COUNT(id) as all_patients'))
-    ->first();//عشان هي قيمه واحده بس //first() return object
+    // $count2= DB::table('patients')
+    // ->select(DB::raw('COUNT(id) as all_patients'))
+    // ->first();//عشان هي قيمه واحده بس //first() return object
+
+    $today=Carbon::today();
+
+    $count2=PatientRecord::whereDate('created_at',$today)
+    ->count('patient_id');
+
 
     //حالات تم الكشف
         $EXcount = DB::table('patient_record')
@@ -66,7 +72,8 @@ foreach ($count as $co) {
 //مش هنحتاج لووب عشان هي قيمه ثابته ف كلو
 //تحديث
     DB::table('doctors')
-        ->update(['all_patients' => $count2->all_patients]);//->all_patients because its object
+        // ->update(['all_patients' => $count2->all_patients]);//->all_patients because its object
+        ->update(['all_patients' => $count2]);//->all_patients because its object
 
         //حالات تم الكشف
         DB::table('patients')

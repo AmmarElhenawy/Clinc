@@ -42,13 +42,14 @@
                             </div>
                             <div class="float-left">
                                 <p class="card-text text-muted mb-1">حالات اليوم</p>
-                                <h3>{{$count2->all_patients}}</h3>
+                                <h3>{{$count2}}</h3>
+                                {{-- <h3>{{$count2->all_patients}}</h3> --}}
                                 {{-- //->all_patients because its object --}}
                             </div>
                         </div>
                         <div class="card-footer p-0">
-                            <p class="text-muted mb-0 pt-4"><i class="si si-exclamation text-info mr-2"></i>From Last Month
-                            </p>
+                            <a href="{{route('showTodayRec')}}" class="text-muted mb-0 pt-4 btn btn-light" ><i class="si si-exclamation text-info mr-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -68,8 +69,8 @@
                             </div>
                         </div>
                         <div class="card-footer p-0">
-                            <p class="text-muted mb-0 pt-4"><i class="si si-exclamation text-info mr-2"></i>From Last Month
-                            </p>
+                            <a href="{{route('showExamined')}}" class="text-muted mb-0 pt-4 btn btn-light" ><i class="si si-exclamation text-info mr-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -83,14 +84,15 @@
                                     <i class="si si-chart tx-30"></i>
                                 </span>
                             </div>
+
                             <div class="float-left">
                                 <p class="card-text text-muted mb-1">حالات المحوله</p>
                                 <h3>{{$transCount}}</h3>
                             </div>
                         </div>
                         <div class="card-footer p-0">
-                            <p class="text-muted mb-0 pt-4"><i class="si si-exclamation text-info mr-2"></i>From Last Month
-                            </p>
+                            <a href="{{route('showTransfered')}}" class="text-muted mb-0 pt-4 btn btn-light" ><i class="si si-exclamation text-info mr-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

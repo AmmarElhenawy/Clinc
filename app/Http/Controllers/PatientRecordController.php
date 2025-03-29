@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+// use App\Http\Controllers\Carbon;
+use Carbon\Carbon;
+
+
 
 use App\Models\patientRecord;
 use App\Models\patients;
@@ -111,6 +116,41 @@ class PatientRecordController extends Controller
 
         $patientRecord=patientRecord::all();
         return view('patients.reExamination',compact('patientRecord'));
+    }
+//تم الكشف page
+    public function showExamined()
+    {
+        //متسخدمش table
+        // $patientRecord=DB::table('patient_record')
+        // ->where('value_status',1)
+        // ->get();
+
+        //استخدم eloquent model
+        $patientRecord=patientRecord::where('value_status',1)->get();
+        $doctor=doctor::all();
+        return view('records.examined_records',compact('patientRecord','doctor'));
+    }
+
+
+    public function showTodayRec()
+    {
+        $today=Carbon::today();
+        //استخدم eloquent model
+        $patientRecord=patientRecord::whereDate('created_at',$today)
+        ->get();
+        $doctor=doctor::all();
+        return view('records.today_records',compact('patientRecord','doctor'));
+    }
+
+
+    public function showTransfered()
+    {
+$patientRecord = PatientRecord::join('patients','patient_record.patient_id','=','patients.id')
+                ->whereNotNull('patients.doctor_id')
+                ->get();
+
+$doctor = Doctor::all();
+return view('records.transfered_records', compact('patientRecord', 'doctor'));
     }
     public function toggleStatus($id)
     {

@@ -33,9 +33,12 @@
                             <div class="col">
                                 <p> حالات الكشف</p>
                                 <p class="card-text">{{$doc->examined}} </p>
+                                {{-- <p class="card-text">{{$count}} </p> --}}
                             </div>
                         </div>
-                        <a class="btn btn-primary" href="{{url('doctorDetails')}}/{{$doc->id}}">Read More</a>
+                        <a class="btn btn-primary" href="{{url('patientsDocRecord')}}/{{$doc->id}}"> سجل المرضي</a>
+                        <a class="btn btn-warning" href="{{url('doctorDetails')}}/{{$doc->id}}"> بيانات الدكتور </a>
+                        <a class="btn btn-success" href="{{url('examinedDoctorRecords')}}/{{$doc->id}}"> بيانات حالات الكشف </a>
                     </div>
                 </div>
             </div>
