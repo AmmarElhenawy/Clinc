@@ -29,7 +29,24 @@ class DoctorDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image=$request->file('file_name');
+        $file_name=$image->getClientOriginalName();
+        $doctorName=$request->Doctor_full_name;
+        $id=$request->id;
+        $attach=new invoices_attachment();
+        $attach->file_name=$file_name;
+        $attach->doctorName=$doctorName;
+        $attach->id=$id;
+        $attach->create_by=(Auth::user()->name);
+        $attach->save();
+
+        $imageName=$request->file_name->getClientOriginalName();
+        // $request->pic->move(public_path('attachments/',$invoice_number),$imageName);
+        $image->move(public_path("attachments/$doctorName"), $imageName);
+
+        // session()->flash('Add', 'تم اضافة المرفق بنجاح');
+        return back();
+
     }
 
     /**

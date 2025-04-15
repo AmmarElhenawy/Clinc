@@ -84,7 +84,7 @@ class DoctorController extends Controller
      */
     public function edit(doctor $doctor)
     {
-        //
+// عرض الفورم بس
     }
 
     /**
@@ -92,15 +92,27 @@ class DoctorController extends Controller
      */
     public function update(Request $request, doctor $doctor)
     {
-        //
+        $doc=doctor::where('id',$request->id)->firstOrFail();
+        $doc->update([
+            'profile_image' => $request->profile_image,
+            'doctor_full_name' => $request->Doctor_full_name,
+            'phone_number' => $request->Phone_number,
+            'email' => $request->Email,
+            'address' => $request->Address,
+            'specialty' => $request->Specialty,
+            'qualifications' => $request->Qualifications,
+
+        ]);
+        return redirect('/doctors');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(doctor $doctor)
+    public function destroy($id)
     {
-        //
+        $doctor=doctor::where('id',$id)->delete();
+        return back();
     }
     public function toggleStatus($id)
     {

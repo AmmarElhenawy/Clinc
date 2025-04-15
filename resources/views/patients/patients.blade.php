@@ -79,6 +79,9 @@
                                                                         <a class="btn btn-outline-primary " data-effect="effect-scale"
                                                                         href="{{route('editPatients',$p->id)}}"
                                                                         title=""><i class="las la-plus"></i></a>
+                                                                        <a class="btn btn-outline-danger " data-effect="effect-scale"
+                                                                        href="{{route('deletePatients',$p->id)}}"
+                                                                        title=""><i class="las la-trash"></i></a>
                                                                         {{-- <a class="btn btn-outline-primary " data-effect="effect-scale"
                                                                         data-id="{{ $pro->id }}" data-product_name="{{ $pro->product_name }}"
                                                                         data-description="{{ $pro->description }}"
@@ -89,7 +92,7 @@
                                                                         <a class="btn btn-outline-danger " data-effect="effect-scale"
                                                                         data-id="{{ $pro->id }}" data-product_name="{{ $pro->product_name }}" data-toggle="modal"
                                                                         href="#modaldemo7" title="حذف"><i class="las la-trash"></i></a> --}}
-lll
+
                                                                     </td>
 
                                                                     {{-- <td>$450,870</td> --}}

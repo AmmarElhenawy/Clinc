@@ -159,4 +159,8 @@ return view('records.transfered_records', compact('patientRecord', 'doctor'));
         $patient->save();
         return response()->json(['value_status' => $patient->value_status]);//استجابة JSON تحتوي على قيمة value_status بعد تحديثها.
     }
+
+    public function showPrescription(){
+        return view('Prescription/prescription');
+    }
 }

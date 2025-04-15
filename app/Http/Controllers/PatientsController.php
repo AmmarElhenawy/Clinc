@@ -91,9 +91,10 @@ class PatientsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(patients $patients)
+    public function destroy($id)
     {
-        //
+        $patients=patients::where('id',$id)->delete();
+        return back();
     }
     public function showPatientDetails($id)
     {

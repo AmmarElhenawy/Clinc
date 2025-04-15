@@ -31,12 +31,17 @@ Route::get('showTodayRecords', [PatientRecordController::class,'showTodayRec'])-
 Route::get('patientsDocRecord/{id}', [DoctorController::class,'patientsDocRecord'])->name('patientsDocRecord');
 Route::get('doctorDetails/{id}', [DoctorController::class,'show'])->name('doctorDetails');
 Route::get('examinedDoctorRecords/{id}', [DoctorController::class,'examinedDocRecord'])->name('examinedDocRecord');
+Route::get('doctorspUpdate/{id}', [DoctorController::class,'update'])->name('doctorspUpdate');
+Route::get('deleteDoctor/{id}', [DoctorController::class,'destroy'])->name('deleteDoctor');
 
 Route::get('patientDetails/{id}', [PatientsController::class,'showPatientDetails'])->name('patientDetails');
 Route::get('editPatients/{id}', [PatientsController::class,'edit'])->name('editPatients');
+Route::get('deletePatients/{id}', [PatientsController::class,'destroy'])->name('deletePatients');
 Route::patch('patients/update/{id}', [PatientsController::class,'update'])->name('patients.update');
+Route::get('showPrescription', [PatientRecordController::class,'showPrescription'])->name('showPrescription');
 
-// Route::get('/Doctor/doctorDetails/{id}', [DoctorDetailsController::class,'edit']);
+
+Route::get('doctorProfile', [DoctorDetailsController::class,'store'])->name('doctorProfile');
 
 //flib status
 Route::post('/toggle-status/{id}', [PatientRecordController::class, 'toggleStatus']);

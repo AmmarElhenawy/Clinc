@@ -224,6 +224,7 @@
                                 <input type="file" name="pic" class="dropify"
                                     accept=".pdf,.jpg, .png, image/jpeg, image/png" data-height="70" />
                             </div> --}}
+                            <a href="{{route('showPrescription')}}" class="btn btn-block btn-primary col-6 mt-5 "> اضافه روشته </a>
                             <br>
                     </form>
                 </div>

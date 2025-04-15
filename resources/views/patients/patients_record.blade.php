@@ -47,7 +47,7 @@
                                     <th>الوزن</th>
                                     <th>الحاله </th>
                                     <th>تحويل</th>
-                                    {{-- <th> info </th> --}}
+                                    <th> info </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,9 +84,9 @@
                                                                     </select>
                                                                 </form>
                                                             </td>
-
-
-                                                                {{-- <td>$450,870</td> --}}
+                                                                <td><a class="btn" href="{{route('patientDetails',$pr->patient_id)}}">
+                                                                    <i class="mdi mdi-dots-vertical text-gray"></i>
+                                                                </a></td>
                                                             </tr>
                                 @endforeach
 
