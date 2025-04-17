@@ -122,7 +122,7 @@ class DoctorController extends Controller
      */
     public function update(Request $request, doctor $doctor)
     {
-        $doc=doctor::where('id',$request->id)->firstOrFail();
+        $doc=doctor::where('id',$request->Id)->firstOrFail();
         $doc->update([
             'profile_image' => $request->profile_image,
             'doctor_full_name' => $request->Doctor_full_name,

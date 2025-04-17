@@ -14,7 +14,8 @@ class PatientRecordObserver
      */
     public function created(PatientRecord $patientRecord): void
     {
-        $doctorId = $patientRecord->patient->doctor_id;
+        // pat_id from patientRecord model
+        $doctorId = $patientRecord->pat_id->doctor_id;
 
         $count = PatientRecord::join('patients', 'patient_record.patient_id', '=', 'patients.id')
         ->where('patients.doctor_id', '=', $doctorId)
@@ -32,7 +33,7 @@ class PatientRecordObserver
      */
     public function updated(PatientRecord $patientRecord): void
     {
-        $doctorId = $patientRecord->patient->doctor_id;
+        $doctorId = $patientRecord->pat_id->doctor_id;
 
         $count = PatientRecord::join('patients', 'patient_record.patient_id', '=', 'patients.id')
         ->where('patients.doctor_id', '=', $doctorId)

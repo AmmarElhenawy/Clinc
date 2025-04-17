@@ -31,7 +31,7 @@ Route::get('showTodayRecords', [PatientRecordController::class,'showTodayRec'])-
 Route::get('patientsDocRecord/{id}', [DoctorController::class,'patientsDocRecord'])->name('patientsDocRecord');
 Route::get('doctorDetails/{id}', [DoctorController::class,'show'])->name('doctorDetails');
 Route::get('examinedDoctorRecords/{id}', [DoctorController::class,'examinedDocRecord'])->name('examinedDocRecord');
-Route::get('doctorspUpdate/{id}', [DoctorController::class,'update'])->name('doctorspUpdate');
+Route::get('doctorUpdate', [DoctorController::class,'update'])->name('doctorUpdate');
 Route::get('deleteDoctor/{id}', [DoctorController::class,'destroy'])->name('deleteDoctor');
 
 Route::get('patientDetails/{id}', [PatientsController::class,'showPatientDetails'])->name('patientDetails');

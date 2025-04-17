@@ -48,4 +48,9 @@ class PatientRecord extends Model
     return $this->belongsTo(patients::class, 'patient_id');
 }
 
+// public function patient()
+// {
+//     return $this->belongsTo(Patients::class);
+// }
+
 }

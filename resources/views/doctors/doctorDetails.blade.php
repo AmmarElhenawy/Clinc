@@ -51,8 +51,14 @@
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col">
-                                            <input type="file" name="profile_image" value="{{$doctor->profile_image}}">
-                                        </div>
+
+                                            @if($doctor->profile && $doctor->profile->file_name)
+                                            <img class="card-img-top mx-auto d-block" style="width: 150px; height: 150px; object-fit: cover;"
+                                                src="{{ asset('profile_images/' . $doctor->doctor_full_name . '/' . $doctor->profile->file_name) }}" alt="">
+                                        @else
+                                            <img class="card-img-top mx-auto d-block" style="width: 150px; height: 150px; object-fit: cover;"
+                                                src="{{ asset('profile_images/default.png') }}" alt="No Image">
+                                        @endif                                        </div>
                                         <div class="col">
                                             <label for="First_name" class="control-label">الأسم كامل </label>
                                             <input type="" class="form-control" id="First_name" name="First_name" value="{{$doctor->doctor_full_name}}" required>
