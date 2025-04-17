@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('doctor_profile', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoice2s');
+            $table->unsignedBigInteger('doctor_id')->nullable();
+            $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->string('file_name');
             $table->string('create_by');
-            $table->string('invoice_number');
             $table->timestamps();
         });
     }

@@ -32,7 +32,7 @@ class HomeController extends Controller
         //     ->select('doctors.id as doctor_id', DB::raw('COUNT(patients.id) as total_patients'))
         //     ->groupBy('doctors.id')
         //     ->get();
-        $doctor=doctor::all();
+        $doctor=doctor::withCount('patient')->get();
 
         $count= DB::table('doctors')
     ->leftJoin('patients', 'doctors.id', '=', 'patients.doctor_id')

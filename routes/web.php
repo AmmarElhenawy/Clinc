@@ -41,7 +41,7 @@ Route::patch('patients/update/{id}', [PatientsController::class,'update'])->name
 Route::get('showPrescription', [PatientRecordController::class,'showPrescription'])->name('showPrescription');
 
 
-Route::get('doctorProfile', [DoctorDetailsController::class,'store'])->name('doctorProfile');
+Route::post('doctorProfile', [DoctorDetailsController::class,'store'])->name('doctorProfile');
 
 //flib status
 Route::post('/toggle-status/{id}', [PatientRecordController::class, 'toggleStatus']);

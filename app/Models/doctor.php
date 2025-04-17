@@ -20,4 +20,14 @@ class doctor extends Model
         'status',
         'value_status'
         ];
-}
+        public function profile()
+        //one to one relation
+        {
+            return $this->hasOne(doctor_profile::class, 'doctor_id');
+        }
+        public function patient()
+        //one to one relation
+        {
+            return $this->hasMany(patients::class, 'doctor_id');
+        }
+    }

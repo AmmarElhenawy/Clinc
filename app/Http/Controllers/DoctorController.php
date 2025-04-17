@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\doctor;
 use App\Models\PatientRecord;
+use App\Models\doctor_profile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -17,7 +19,9 @@ class DoctorController extends Controller
     public function index()
     {
 
-        $doctor=doctor::all();
+        //with count bt3ml el 2sm mn nfsha / patient+count =patient_count
+        // patient دي realtion hasMany in doctor controller
+        $doctor=doctor::withCount('patient')->get();
         return view('doctors.doctors',compact('doctor'));
     }
 
@@ -48,7 +52,7 @@ class DoctorController extends Controller
         //     $imagePath = $request->file('profile_image')->store('profile_images', 'public');
             // $doctor->profile_image = $imagePath;
         // }
-        doctor::create([
+        $doctor=doctor::create([
             'doctor_full_name' => $request->First_name." ".$request->Last_name ,
             // 'profile_image' => $request->$imagePath,
             'status' => $request->Status,
@@ -63,6 +67,32 @@ class DoctorController extends Controller
             'qualifications' => $request->Qualifications,
         ]);
 
+
+        // profile image
+        $image=$request->file('file_name');
+        $file_name=$image->getClientOriginalName();
+        $doctorName=$doctor->doctor_full_name;
+        $Doctor_id=$doctor->id;
+        $attach=new doctor_profile();
+        $attach->file_name=$file_name;
+        $attach->doctor_full_name=$doctorName;
+        $attach->doctor_id=$Doctor_id;
+        $attach->create_by=(Auth::user()->name);
+        $attach->save();
+
+        $imageName=$request->file_name->getClientOriginalName();
+        // $request->pic->move(public_path('attachments/',$invoice_number),$imageName);
+        $destinationPath = public_path("profile_images/$doctorName");
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0775, true);
+        }
+
+        $image->move($destinationPath, $file_name);
+        // session()->flash('Add', 'تم اضافة المرفق بنجاح');
+        // return back();
+
+        // profile image
 
         // session()-> flash('add','تم اضافه المنتج بنجاح');
         return redirect('doctors');

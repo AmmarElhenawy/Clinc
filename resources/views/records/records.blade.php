@@ -145,7 +145,7 @@
                                                                         {{-- firstWhere()ترجع أول عنصر مباشرةً الذي يطابق الشرط.لا تحتاج إلى first() لأنه مدمج داخله --}}
                                                                         {{-- where هتعمل نفس الحاجه بس هتبعت البيانات كلها --}}
                                                                         {{ $count->firstWhere('doctor_id',$doc->id)->total_patients??0 }}</td>
-                                                                        <td>{{$doc->examined}}</td>
+                                                                        <td>{{$doc->patient_count}}</td>
                                                                         <td>                                                                        <button
                                                                             class="toggleButton btn {{ $doc->value_status == 1 ? 'btn-success' : 'btn-danger' }}"data-id="{{ $doc->id }}">
                                                                             {{ $doc->value_status == 1 ? 'متاح' : 'غير متاح' }}

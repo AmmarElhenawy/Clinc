@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\doctorDetails;
+
 use App\Models\doctor;
 use Illuminate\Http\Request;
 
@@ -29,23 +30,28 @@ class DoctorDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        $image=$request->file('file_name');
-        $file_name=$image->getClientOriginalName();
-        $doctorName=$request->Doctor_full_name;
-        $id=$request->id;
-        $attach=new invoices_attachment();
-        $attach->file_name=$file_name;
-        $attach->doctorName=$doctorName;
-        $attach->id=$id;
-        $attach->create_by=(Auth::user()->name);
-        $attach->save();
+        // $image=$request->file('file_name');
+        // $file_name=$image->getClientOriginalName();
+        // $doctorName=$request->Doctor_full_name;
+        // $Doctor_id=$request->Doctor_id;
+        // $attach=new doctor_profile();
+        // $attach->file_name=$file_name;
+        // // $attach->doctor_full_name=$doctorName;
+        // $attach->doctor_id=$Doctor_id;
+        // $attach->create_by=(Auth::user()->name);
+        // $attach->save();
 
-        $imageName=$request->file_name->getClientOriginalName();
-        // $request->pic->move(public_path('attachments/',$invoice_number),$imageName);
-        $image->move(public_path("attachments/$doctorName"), $imageName);
+        // $imageName=$request->file_name->getClientOriginalName();
+        // // $request->pic->move(public_path('attachments/',$invoice_number),$imageName);
+        // $destinationPath = public_path("profile_images/$doctorName");
 
-        // session()->flash('Add', 'تم اضافة المرفق بنجاح');
-        return back();
+        // if (!file_exists($destinationPath)) {
+        //     mkdir($destinationPath, 0775, true);
+        // }
+
+        // $image->move($destinationPath, $file_name);
+        // // session()->flash('Add', 'تم اضافة المرفق بنجاح');
+        // return back();
 
     }
 
