@@ -163,4 +163,7 @@ return view('records.transfered_records', compact('patientRecord', 'doctor'));
     public function showPrescription(){
         return view('Prescription/prescription');
     }
+    public function showInvoice(){
+        return view('Prescription/invoice');
+    }
 }

@@ -6,7 +6,9 @@ use App\Http\Controllers\PatientRecordController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DoctorDetailsController;
+use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers;
+use App\Models\prescription;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -18,6 +20,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('patients', PatientsController::class);
 Route::resource('patientsRecord', PatientRecordController::class);
 Route::resource('doctors', DoctorController::class);
+// Route::resource('prescription', PrescriptionController::class);
 // Route::resource('Doctor/doctors', DoctorController::class);
 // Route::prefix('Doctor')->group(function () {
 // });
@@ -38,8 +41,10 @@ Route::get('patientDetails/{id}', [PatientsController::class,'showPatientDetails
 Route::get('editPatients/{id}', [PatientsController::class,'edit'])->name('editPatients');
 Route::get('deletePatients/{id}', [PatientsController::class,'destroy'])->name('deletePatients');
 Route::patch('patients/update/{id}', [PatientsController::class,'update'])->name('patients.update');
-Route::get('showPrescription', [PatientRecordController::class,'showPrescription'])->name('showPrescription');
+Route::get('prescription/{id}', [PrescriptionController::class,'index'])->name('prescription');
+Route::post('addPrescription', [PrescriptionController::class,'store'])->name('addPrescription');
 
+Route::get('printInvoice/{id}', [PrescriptionController::class,'showInvoice'])->name('printInvoice');
 
 Route::post('doctorProfile', [DoctorDetailsController::class,'store'])->name('doctorProfile');
 

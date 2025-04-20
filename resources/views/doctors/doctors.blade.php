@@ -30,6 +30,8 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{ url('patientsDocRecord/' . $doc->id) }}">سجل المرضى</a>
                             <a class="dropdown-item" href="{{ url('doctorDetails/' . $doc->id) }}">بيانات الدكتور</a>
+                            @can('تعديل حذف')
+
                             <a class="dropdown-item" data-id="{{ $doc->id }}" data-profile=""
                                 data-doctor_full_name="{{ $doc->doctor_full_name }}" data-email="{{ $doc->email }}"
                                 data-phone_number="{{ $doc->phone_number }}" data-specialty="{{ $doc->specialty }}"
@@ -38,6 +40,7 @@
                                 تعديل
                             </a>
                             <a class="dropdown-item" href="{{ url('deleteDoctor/' . $doc->id) }}">حذف</a>
+                            @endcan
                         </div>
                     </div>
 
@@ -73,12 +76,13 @@
             </div>
 
         @endforeach
-
-        <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20 ">
-            <a class="fas fa-plus-circle fa-6x  " style="color: green;" data-effect="effect-super-scaled"
-                data-toggle="modal" href="#modaldemo8"> </a>
-            {{-- <i class="fas fa-plus-circle fa-2x" style="color: green;"></i> --}}
-        </div>
+@can('اضافه دوكتور')
+<div class="col-sm-6 col-md-4 col-xl-3 mg-t-20 ">
+    <a class="fas fa-plus-circle fa-6x  " style="color: green;" data-effect="effect-super-scaled"
+    data-toggle="modal" href="#modaldemo8"> </a>
+    {{-- <i class="fas fa-plus-circle fa-2x" style="color: green;"></i> --}}
+</div>
+@endcan
 
     </div>
     <!-- row closed -->

@@ -26,16 +26,20 @@
                     </div>
                     <p class="tx-12 tx-gray-500 mb-2"></p>
                 </div>
+                @can('كشف')
                 <div class="col-sm-6 col-md-4 col-xl-3">
                     <a href="{{ route('addPatients') }}" class="btn btn-outline-primary btn-block">
                         كشف
                     </a>
                 </div>
+                @endcan
+                @can('اعاده')
                 <div class="col-sm-6 col-md-4 col-xl-3">
                     <a href="{{ route('showPatients') }}" class="btn btn-outline-primary btn-block">
                         اعاده
                     </a>
                 </div>
+                @endcan
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table mg-b-0 text-md-nowrap">
@@ -66,27 +70,35 @@
                                                                 <td>{{$pr->weight}}</td>
                                                                 {{-- <td>{{$doc->examined}}</td> --}}
                                                                 <td>
+                                                                    @can('حاله الكشف')
                                                                     {{--  class="toggleButton" بيضيف لكل ازرار الصفوف عكس id="toggleButton" --}}
                                                                     <button
                                                                     class="toggleButton btn {{ $pr->value_status == 1 ? 'btn-success' : 'btn-danger' }}"data-id="{{ $pr->id }}">
                                                                     {{ $pr->value_status == 1 ? 'كشف' : 'اعاده' }}
                                                                 </button>
+                                                                @endcan
                                                             </td>
                                                             <td>
+                                                                @can('تحويل الي دوكتور')
                                                                 <form  action="{{ route( 'transfereToDoctor',$pr->patient_id) }}" method="POST" >
                                                                     {{ csrf_field() }}
                                                                     {{ method_field('PATCH') }}
                                                                     <select name="Doctor_id" id="doctor_id" class="form-control"onchange="this.form.submit()">
                                                                         <option value="{{$pr->pat_id->doctor_id}}" selected disabled>{{isset($pr->pat_id->doctor_id)?$pr->pat_id->doc_id->doctor_full_name:"-- حدد الدكتور --"}}</option>
                                                                         @foreach ($doctor as $doc)
-                                                                            <option value="{{ $doc->id }}">{{ $doc->doctor_full_name }}</option>
+                                                                        <option value="{{ $doc->id }}">{{ $doc->doctor_full_name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </form>
+                                                                @endcan
                                                             </td>
-                                                                <td><a class="btn" href="{{route('patientDetails',$pr->patient_id)}}">
-                                                                    <i class="mdi mdi-dots-vertical text-gray"></i>
-                                                                </a></td>
+                                                            <td>
+                                                                @can('روشته')
+                                                                <a class="btn" href="{{route('patientDetails',$pr->patient_id)}}">
+                                                                <i class="mdi mdi-dots-vertical text-gray"></i>
+                                                            </a>
+                                                            @endcan
+                                                            </td>
                                                             </tr>
                                 @endforeach
 

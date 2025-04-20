@@ -22,4 +22,8 @@ class doctor_profile extends Model
         // {
         //     return $this->belongsTo(doctor::class, 'doctor_id');
         // }
-}
+        public function doctor()
+        {
+            return $this->belongsTo(doctor::class, 'doctor_id');
+        }
+    }

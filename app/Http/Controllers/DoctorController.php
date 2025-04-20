@@ -141,6 +141,7 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
+        $profile=doctor_profile::where('doctor_id',$id)->delete();
         $doctor=doctor::where('id',$id)->delete();
         return back();
     }

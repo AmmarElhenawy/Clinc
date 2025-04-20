@@ -20,12 +20,13 @@
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{route('addPrescription')}}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="row mb-4">
                         <div class="col">
+                            <input type="text" name="Id" id="Id" value="{{$patient->id}}" hidden>
                             <label class="control-label">النوع</label>
-                            <select name="type" class="form-control">
+                            <select name="Type" class="form-control">
                                 <option selected disabled>اختر النوع</option>
                                 <option value="capsule">كبسول</option>
                                 <option value="syrup">شراب</option>
@@ -34,7 +35,7 @@
                         </div>
                         <div class="col">
                             <label class="control-label">العلاج</label>
-                            <select name="medicine" class="form-control">
+                            <select name="Drug_name" class="form-control">
                                 <option selected disabled>اختر العلاج</option>
                                 <option value="panadol">بانادول</option>
                                 <option value="amoxicillin">أموكسيسيلين</option>
@@ -43,20 +44,20 @@
                         </div>
                         <div class="col">
                             <label class="control-label">التركيز</label>
-                            <select name="concentration" class="form-control">
+                            <select name="Concentration" class="form-control">
                                 <option selected disabled>اختر التركيز</option>
-                                <option value="250mg">250mg</option>
-                                <option value="500mg">500mg</option>
-                                <option value="1000mg">1000mg</option>
+                                <option value=250>250mg</option>
+                                <option value=500>500mg</option>
+                                <option value=1000>1000mg</option>
                             </select>
                         </div>
                         <div class="col">
                             <label class="control-label">عدد مرات</label>
-                            <input type="number" class="form-control" name="times_per_day" placeholder="عدد مرات في اليوم">
+                            <input type="text" class="form-control" name="Times" placeholder="عدد مرات في اليوم">
                         </div>
                         <div class="col">
                             <label class="control-label">مدة العلاج</label>
-                            <input type="text" class="form-control" name="duration" placeholder="مثلاً: 5 أيام">
+                            <input type="text" class="form-control" name="Period" placeholder="مثلاً: 5 أيام">
                         </div>
                     </div>
 
@@ -65,9 +66,9 @@
                             <i class="fa fa-plus"></i> إضافة علاج
                         </button>
                         {{-- another way invoiceTemp for print --}}
-                        <button type="button" onclick="window.print()" class="btn btn-success mx-2">
+                        <a type="button"href="{{route('printInvoice',$patient->id)}}" class="btn btn-success mx-2">
                             <i class="fa fa-print"></i> طباعه
-                        </button>
+                        </a>
                     </div>
                 </form>
             </div>
