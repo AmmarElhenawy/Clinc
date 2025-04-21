@@ -166,4 +166,8 @@ return view('records.transfered_records', compact('patientRecord', 'doctor'));
     public function showInvoice(){
         return view('Prescription/invoice');
     }
+    public function showPatientRecDetails($id){
+        $patientRecord=patientRecord::where('id',$id)->firstOrFail();
+        return view('patients/patientRecDetails',compact('patientRecord'));
+    }
 }

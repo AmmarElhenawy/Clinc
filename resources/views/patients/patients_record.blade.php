@@ -51,7 +51,9 @@
                                     <th>الوزن</th>
                                     <th>الحاله </th>
                                     <th>تحويل</th>
+                                    @can('روشته')
                                     <th> info </th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,13 +94,13 @@
                                                                 </form>
                                                                 @endcan
                                                             </td>
+                                                            @can('روشته')
                                                             <td>
-                                                                @can('روشته')
-                                                                <a class="btn" href="{{route('patientDetails',$pr->patient_id)}}">
+                                                                <a class="btn" href="{{route('info',$pr->patient_id)}}">
                                                                 <i class="mdi mdi-dots-vertical text-gray"></i>
                                                             </a>
-                                                            @endcan
-                                                            </td>
+                                                        </td>
+                                                        @endcan
                                                             </tr>
                                 @endforeach
 

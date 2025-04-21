@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\doctor;
 use App\Models\patients;
+use App\Models\prescription;
 use App\Models\patientRecord;
 use Illuminate\Http\Request;
 
@@ -98,10 +99,13 @@ class PatientsController extends Controller
     }
     public function showPatientDetails($id)
     {
+        $pr=patientRecord::where('patient_id',$id)->value('id');
         $patients=patients::where('id',$id)->first();
         $patientRecord=patientRecord::where('patient_id',$id)->first();
+        $prescription=prescription::where('patient_record_id',$pr)->get();
+
         // $patients=patients::all();
-        return view('patients.patient_details',compact( 'patients','patientRecord'));
+        return view('patients.patient_details',compact( 'patients','patientRecord','prescription'));
     }
     public function transToDoctor(Request $request, $id)
     {

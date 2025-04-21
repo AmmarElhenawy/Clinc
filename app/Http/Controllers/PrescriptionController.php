@@ -84,4 +84,11 @@ class PrescriptionController extends Controller
         // $id_patient=$id;
         return view('Prescription/invoice',compact('patient','prescription','patient_rec'));
     }
+    public function showInfo($id){
+        $patients = patients::where('id', $id)->first(); // لو متوقع واحد بس
+        $patientRecord = patientRecord::where('patient_id', $id)->first(); // لو متوقع سجل واحد فقط
+
+        // $id_patient=$id;
+        return view('Prescription/info',compact('patients','patientRecord'));
+    }
 }

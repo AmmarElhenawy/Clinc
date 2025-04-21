@@ -38,9 +38,11 @@ Route::get('doctorUpdate', [DoctorController::class,'update'])->name('doctorUpda
 Route::get('deleteDoctor/{id}', [DoctorController::class,'destroy'])->name('deleteDoctor');
 
 Route::get('patientDetails/{id}', [PatientsController::class,'showPatientDetails'])->name('patientDetails');
+Route::get('patientRecDetails/{id}', [PatientRecordController::class,'showPatientRecDetails'])->name('patientRecDetails');
 Route::get('editPatients/{id}', [PatientsController::class,'edit'])->name('editPatients');
 Route::get('deletePatients/{id}', [PatientsController::class,'destroy'])->name('deletePatients');
 Route::patch('patients/update/{id}', [PatientsController::class,'update'])->name('patients.update');
+Route::get('info/{id}', [PrescriptionController::class,'showInfo'])->name('info');
 Route::get('prescription/{id}', [PrescriptionController::class,'index'])->name('prescription');
 Route::post('addPrescription', [PrescriptionController::class,'store'])->name('addPrescription');
 

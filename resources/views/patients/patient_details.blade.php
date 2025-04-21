@@ -86,150 +86,51 @@
                             </div>
                         </div>
 
-                        {{-- @endforeach --}}
-                        {{-- 4 --}}
-
-                            <br>
-                            <br>
-                            <br>
-
-                        <h3 class="card-title">بيانات المريض</h3>
-                            <div class="row">
-                                    <div class="col">
-                                        <label for="inputName" class="control-label"> مده السكر </label>
-                                        <input type="text" class="form-control" id="Diabetes_duration" name="Diabetes_duration"
-                                        value="{{$patientRecord->diabetes_duration}}" readonly>
-                                    </div>
-                                    <div class="col">
-                                        <label for="inputName" class="control-label"> الطول  </label>
-                                        <input type="text" class="form-control" id="height" name="Height"
-                                        value="{{ $patientRecord->height ?? '' }}" readonly>
-                                    </div>
-                                    <div class="col">
-                                        <label for="inputName" class="control-label"> الوزن  </label>
-                                        <input type="text" class="form-control" id="weight" name="Weight"
-                                        value="{{ $patientRecord->weight ?? '' }}" readonly>
-                                    </div>
-
-                            </div>
-
-                            {{-- 5 --}}
-
-                            <div class="row">
-                                <div class="col">
-                                    <label for="inputName" class="control-label"> الادويه  </label>
-                                    <input type="text" class="form-control" id="medications" name="Medications"
-                                    value="{{ $patientRecord->medications ?? '' }}" readonly>
-                                </div>
-                            </div>
-
-
-                            {{-- 6 --}}
-                            <div class="row">
-                                <div class="col">
-                                    <label for="inputName" class="control-label">نظام غذائي  </label>
-                                    <input type="text" class="form-control" id="diet_plan" name="Diet_plan" value="{{ $patientRecord->diet_plan ?? '' }}"readonly>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            {{-- isset بيتاكد انها موجوده ممكن متستخدمهاش --}}
-                            <h5 class="card-title">التحاليل</h5>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Fasting_blood_sugar" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="fasting_blood_sugar" name="Fasting_blood_sugar"  value="1" {{$checked=isset($patientRecord->fasting_blood_sugar)&&$patientRecord->fasting_blood_sugar==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">سكر صائم </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Post_meal_blood_sugar" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="post_meal_blood_sugar" name="Post_meal_blood_sugar"  value="1"{{$patientRecord->post_meal_blood_sugar==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">سكر فاطر </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Hba1c" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="hba1c" name="Hba1c"  value="1" {{$checked=isset($patientRecord->hba1c)&&$patientRecord->hba1c==1 ? 'checked':'';}}readonly disabled>
-                                    <label for="inputName" class="control-label">سكر تراكمي </label>
-                                </div>
-                            </div>
-                            <br>
-                            <h5 class="card-title">الفحوصات</h5>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Kidney_function_tests" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="kidney_function_tests" name="Kidney_function_tests"  value="1" {{$checked=isset($patientRecord->kidney_function_tests)&&$patientRecord->kidney_function_tests==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label"> وظائف كلي</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Retinal_examination" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="retinal_examination" name="Retinal_examination"  value="1" {{$checked=isset($patientRecord->retinal_examination)&&$patientRecord->retinal_examination==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">فحص قاع العين  </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Ecg" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="ecg" name="Ecg"  value="1" {{$checked=isset($patientRecord->ecg)&&$patientRecord->ecg==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">رسم قلب  </label>
-                                </div>
-                            </div>
-
-
-                            <br>
-                            <br>
-                            <br>
-
-                            <div class="row">
-                                <h5 class="card-title">الشكاوي</h5>
-
-                                <div class="col">
-                                {{-- <input type="hidden" class="form-control"  name="Numbness" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="numbness" name="Numbness"  value="1" {{$checked=isset($patientRecord->numbness)&&$patientRecord->numbness==1 ? 'checked':'';}}readonly disabled>
-                                    <label for="inputName" class="control-label">تنميل </label>
-                                </div>
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Burning_sensation" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="burning_sensation" name="Burning_sensation"  value="1" {{$checked=isset($patientRecord->burning_sensation)&&$patientRecord->burning_sensation==1 ? 'checked':'';}}readonly disabled>
-                                    <label for="inputName" class="control-label"> حرقان  </label>
-                                </div>
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Tingling" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="tingling" name="Tingling"  value="1" {{$checked=isset($patientRecord->tingling)&&$patientRecord->tingling==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">شكشكة</label>
-                                </div>
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Cold_extremities" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="cold_extremities" name="Cold_extremities"  value="1" {{$checked=isset($patientRecord->cold_extremities)&&$patientRecord->cold_extremities==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">برودة الأطراف  </label>
-                                </div>
-                                <div class="col">
-                                    {{-- <input type="hidden" class="form-control"  name="Muscle_cramps" value="0" > --}}
-                                    <input type="checkbox" class="form-control" id="muscle_cramps" name="Muscle_cramps"  value="1"{{$checked=isset($patientRecord->muscle_cramps)&&$patientRecord->muscle_cramps==1 ? 'checked':'';}} readonly disabled>
-                                    <label for="inputName" class="control-label">شد عضلي  </label>
-                                </div>
-                            </div>
-                            {{-- الحاله --}}
-                                {{-- <input type="hidden" class="form-control" id="status" name="Status"  value="كشف">
-                                <input type="hidden" class="form-control" id="status" name="Value_status"  value=1> --}}
-                            {{-- الحاله --}}
-
-                            {{-- <div class="col-sm-12 col-md-12">
-                                <input type="file" name="pic" class="dropify"
-                                    accept=".pdf,.jpg, .png, image/jpeg, image/png" data-height="70" />
-                            </div> --}}
-                            <a href="{{route('prescription',$patients->id)}}" class="btn btn-block btn-primary col-6 mt-5 "> اضافه روشته </a>
-                            <br>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="d-flex justify-content-between">
+                    <h4 class="card-title mg-b-0"> زيارات المريض</h4>
+                    <i class="mdi mdi-dots-horizontal text-gray"></i>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped mg-b-0 text-md-nowrap">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>الدوكتور</th>
+                                <th>الممرضه</th>
+                                <th>files</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Joan Powell</td>
+                                <td>Associate Developer</td>
+                                <td>
+                                    <a class="btn btn-outline-primary " data-effect="effect-scale"
+                                    href="{{route('patientRecDetails',$patientRecord->id)}}"
+                                    title=""><i class="las la-file"></i></a>
+
+                                    <a type="button"href="{{route('printInvoice',$patients->id)}}" class="btn btn-success mx-2">
+                                        <i class="fa fa-print"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- bd -->
+            </div><!-- bd -->
+        </div><!-- bd -->
     </div>
 
     </div>
