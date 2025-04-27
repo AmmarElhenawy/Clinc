@@ -29,9 +29,9 @@
 @endsection
 @section('content')
 
-    @if (session()->has('Add'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session()->get('Add') }}</strong>
+    @if (session()->has('not_found'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('not_found') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -121,9 +121,11 @@
                                     href="{{route('patientRecDetails',$patientRecord->id)}}"
                                     title=""><i class="las la-file"></i></a>
 
+                                    @can('زر الطباعه')
                                     <a type="button"href="{{route('printInvoice',$patients->id)}}" class="btn btn-success mx-2">
                                         <i class="fa fa-print"></i>
                                     </a>
+                                    @endcan
                                 </td>
                             </tr>
                         </tbody>

@@ -82,7 +82,11 @@ class PrescriptionController extends Controller
         $patient_rec = patientRecord::where('patient_id', $id)->first(); // لو متوقع سجل واحد فقط
 
         // $id_patient=$id;
-        return view('Prescription/invoice',compact('patient','prescription','patient_rec'));
+        if ($prescription){
+            return view('Prescription/invoice',compact('patient','prescription','patient_rec'));
+        }
+        session()->flash('not_found','لا توجد له روشته');
+        return back()->with('there is no prescription');
     }
     public function showInfo($id){
         $patients = patients::where('id', $id)->first(); // لو متوقع واحد بس

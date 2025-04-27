@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\doctor;
+use Illuminate\Support\Facades\DB;
 use App\Models\patients;
 use App\Models\prescription;
 use App\Models\patientRecord;
@@ -109,27 +110,76 @@ class PatientsController extends Controller
     }
     public function transToDoctor(Request $request, $id)
     {
+        //trans doctor with update examined
+        $patient = Patients::find($id);
 
-        $patient = patients::find($id);
+        if (!$patient) {
+            return response()->json([
+                'message' => 'المريض غير موجود'
+            ], 404);
+        }
 
-        // if (!$patient) {
-        //     return response()->json([
-        //         'message' => 'المريض غير موجود'
-        //     ], 404);
-        // }
+        // عشان نستخدمه بعدين لما نحدّث examined_count
+        $oldDoctorId = $patient->doctor_id;
 
+        // حدّث الدكتور للمريض
         $patient->update([
-            'doctor_id' =>$request->Doctor_id,
+            'doctor_id' => $request->Doctor_id,
         ]);
 
-        return
-        back();
-        // response()->json([
-        //     'message' => 'تم تحديث الطبيب للمريض بنجاح',
-        //     'Doctor_id' =>$request->Doctor_id,
-        //     'Patient_id' => $id
-        // ]);
+        // حدّث examined_count للدكتور القديم
+        if ($oldDoctorId) {
+            $oldDoctor = Doctor::find($oldDoctorId);
+            if ($oldDoctor) {
+                $oldDoctorPatients = Patients::where('doctor_id', $oldDoctor->id)->get();
+                $oldDoctorPatientIds = $oldDoctorPatients->pluck('id')->toArray();//[]
+                $oldDoctorExaminedCount = PatientRecord::whereIn('patient_id', $oldDoctorPatientIds)
+                    ->where('value_status', 1)
+                    ->count();//0
+                    $oldDoctor->examined = $oldDoctorExaminedCount;//0
+                    $oldDoctor->save();//0
+
+                    // تحديث total_patients باستخدام Subquery
+                    DB::table('doctors')
+                    ->where('id', $oldDoctorId)
+                    ->update([
+                        'total_patients' => DB::raw('(
+                            SELECT COUNT(patients.id)
+                            FROM patients
+                            WHERE patients.doctor_id = doctors.id
+                            )')
+                        ]);
+                        // تحديث total_patients باستخدام Subquery
+            }
+        }
+
+        // حدّث examined_count للدكتور الجديد
+        $newDoctor = Doctor::find($request->Doctor_id);
+        if ($newDoctor) {
+            $newDoctorPatients = Patients::where('doctor_id', $newDoctor->id)->get();
+            $newDoctorPatientIds = $newDoctorPatients->pluck('id')->toArray();
+            $newDoctorExaminedCount = PatientRecord::whereIn('patient_id', $newDoctorPatientIds)
+                ->where('value_status', 1)
+                ->count();
+            $newDoctor->examined= $newDoctorExaminedCount;
+            $newDoctor->save();
+
+                                // تحديث total_patients باستخدام Subquery
+                                DB::table('doctors')
+                                ->where('id', $request->Doctor_id)
+                                ->update([
+                                    'total_patients' => DB::raw('(
+                                        SELECT COUNT(patients.id)
+                                        FROM patients
+                                        WHERE patients.doctor_id = doctors.id
+                                        )')
+                                    ]);
+                                    // تحديث total_patients باستخدام Subquery
+        }
+
+        return back();
     }
+        //trans doctor with update examined
 
 
 }

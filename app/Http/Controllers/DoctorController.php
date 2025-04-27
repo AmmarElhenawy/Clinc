@@ -22,6 +22,10 @@ class DoctorController extends Controller
         //with count bt3ml el 2sm mn nfsha / patient+count =patient_count
         // patient دي realtion hasMany in doctor controller
         $doctor=doctor::withCount('patient')->get();
+        // foreach ($doctors as $doctor) {
+        //     $doctor->patient_count = $doctor->patient_count; // اللى جاي من withCount
+        //     $doctor->save();
+        // }
         return view('doctors.doctors',compact('doctor'));
     }
 
@@ -42,16 +46,23 @@ class DoctorController extends Controller
         //     'first_name' => 'required',
         //     'last_name' => 'required',
         //     'email' => 'required|email|unique:doctors',
-        //     'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ],[
-        //     'first_name.required'=>'يرجي ادخال الاسم',
-        //     'last_name.exists'=>'القسم غير الاسم',
-        //     'email.unique'=>'يرجي ادخال الايميل',
+        //     'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+        //     'phone_number' => 'required',
+        //     'address' => 'required',
+        //     'specialty' => 'required',
+        //     'qualifications' => 'required',
+        //     'file_name' => 'file|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+        // ], [
+        //     'first_name.required' => 'يرجي ادخال الاسم',
+        //     'last_name.required' => 'يرجي ادخال اسم العائلة',
+        //     'email.unique' => 'الإيميل مستخدم بالفعل',
+        //     'phone_number.required' => 'يرجي ادخال الرقم',
+        //     'email.required' => 'يرجي ادخال الإيميل',
+        //     'address.required' => 'يرجي ادخال العنوان',
+        //     'specialty.required' => 'يرجي ادخال التخصص',
+        //     'qualifications.required' => 'يرجي ادخال المؤهلات',
         // ]);
-        // if ($request->hasFile('Profile_image')) {
-        //     $imagePath = $request->file('profile_image')->store('profile_images', 'public');
-            // $doctor->profile_image = $imagePath;
-        // }
+
         $doctor=doctor::create([
             'doctor_full_name' => $request->First_name." ".$request->Last_name ,
             // 'profile_image' => $request->$imagePath,
@@ -61,26 +72,36 @@ class DoctorController extends Controller
             // 'doctor_id' => $request->Doctor_id,
             'phone_number' => $request->Phone_number,
             'referred_casses' => $request->Referred_casses,
-            'examined' => (int) $request->Examined,
+            // 'examined' => (int) $request->Examined,
             'email' => $request->Email,
             'address' => $request->Address,
             'qualifications' => $request->Qualifications,
         ]);
+        // if ($request->hasFile('Profile_image')) {
+        //     $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+        //     $doctor->profile_image = $imagePath;
+        // }
 
+        // الصوره الافتراضيه
+        $file_name='/public/profile_images/default.png';
+        $doctorName=$request->First_name." ".$request->Last_name;
+        // $Doctor_id=;
+        // الصوره الافتراضيه
 
         // profile image
-        $image=$request->file('file_name');
-        $file_name=$image->getClientOriginalName();
-        $doctorName=$doctor->doctor_full_name;
-        $Doctor_id=$doctor->id;
-        $attach=new doctor_profile();
-        $attach->file_name=$file_name;
-        $attach->doctor_full_name=$doctorName;
-        $attach->doctor_id=$Doctor_id;
-        $attach->create_by=(Auth::user()->name);
-        $attach->save();
+        if ($request->hasfile('file_name')){
+            $image=$request->file('file_name');
+            $file_name=$image->getClientOriginalName();
+            $doctorName=$doctor->doctor_full_name;
+            $Doctor_id=$doctor->id;
+            $attach=new doctor_profile();
+            $attach->file_name=$file_name;
+            $attach->doctor_full_name=$doctorName;
+            $attach->doctor_id=$Doctor_id;
+            $attach->create_by=(Auth::user()->name);
+            $attach->save();
+        // $imageName=$request->file_name->getClientOriginalName();
 
-        $imageName=$request->file_name->getClientOriginalName();
         // $request->pic->move(public_path('attachments/',$invoice_number),$imageName);
         $destinationPath = public_path("profile_images/$doctorName");
 
@@ -89,13 +110,23 @@ class DoctorController extends Controller
         }
 
         $image->move($destinationPath, $file_name);
+
+        }else{
+        $attach = new doctor_profile();
+        $attach->file_name = $file_name; // هنا بيستخدم الصورة المرفوعة أو الافتراضية
+        $attach->doctor_full_name = $doctorName;
+        // $attach->doctor_id = $Doctor_id;
+        $attach->create_by = Auth::user()->name;
+        $attach->save();
+    }
+
         // session()->flash('Add', 'تم اضافة المرفق بنجاح');
         // return back();
 
         // profile image
 
         // session()-> flash('add','تم اضافه المنتج بنجاح');
-        return redirect('doctors');
+        return redirect('doctors')->with('success', 'تم إضافة الدكتور بنجاح');
     }
 
 
@@ -122,6 +153,25 @@ class DoctorController extends Controller
      */
     public function update(Request $request, doctor $doctor)
     {
+        // $request->validate([
+        //     'first_name' => 'required',
+        //     'last_name' => 'required',
+        //     'email' => 'required|email|unique:doctors,email,'.$doctor->id,
+        //     'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+        //     'phone_number' => 'required',
+        //     'address' => 'required',
+        //     'specialty' => 'required',
+        //     'qualifications' => 'required',
+        // ], [
+        //     'first_name.required' => 'يرجي ادخال الاسم',
+        //     'last_name.required' => 'يرجي ادخال اسم العائلة',
+        //     'email.unique' => 'الإيميل مستخدم بالفعل',
+        //     'phone_number.required' => 'يرجي ادخال الرقم',
+        //     'email.required' => 'يرجي ادخال الإيميل',
+        //     'address.required' => 'يرجي ادخال العنوان',
+        //     'specialty.required' => 'يرجي ادخال التخصص',
+        //     'qualifications.required' => 'يرجي ادخال المؤهلات',
+        // ]);
         $doc=doctor::where('id',$request->Id)->firstOrFail();
         $doc->update([
             'profile_image' => $request->profile_image,
@@ -150,6 +200,32 @@ class DoctorController extends Controller
         $doctor=doctor::FindOrFail($id);
         $doctor->value_status=$doctor->value_status==1?0:1;//flip لو 1 رجع 0 والعكس
         $doctor->save();
+
+        $doctors = Doctor::all();
+
+        // لكل دكتور هنعمل الحاجات دي
+        foreach ($doctors as $doctor) {
+            // نجيب كل المرضى بتوع الدكتور ده
+            $patients = Patients::where('doctor_id', $doctor->id)->get();
+
+            // لو مفيش مرضى، نعدي للدكتور اللي بعده
+            if ($patients->isEmpty()) {
+                continue;
+            }
+
+            // نجيب أرقام المرضى بتوع الدكتور ده
+            $patientIds = $patients->pluck('id')->toArray();
+
+            // نعد كام مريض عنده value_status = 1
+            $examinedCount = PatientRecord::whereIn('patient_id', $patientIds)
+                ->where('value_status', 1)
+                ->count();
+
+            // نحدّث examined_count للدكتور ده
+            $doctor->examined = $examinedCount;
+            $doctor->save();
+        }
+
         return response()->json(['value_status' => $doctor->value_status]);//استجابة JSON تحتوي على قيمة value_status بعد تحديثها.
     }
     // public function add_doctor(Request $request)

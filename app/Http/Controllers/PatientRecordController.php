@@ -50,7 +50,7 @@ class PatientRecordController extends Controller
         ]);
 
         // إنشاء سجل في جدول سجلات المرضى وربطه بالمعرف الخاص بالمريض
-        patientRecord::create([
+        $patientRecord=patientRecord::create([
             'patient_id' => $patient->id, // ربط السجل بالمريض
             'weight' => $request->Weight,
             'height' => $request->Height,
@@ -71,6 +71,11 @@ class PatientRecordController extends Controller
             'status' =>  $request->Status,
             'value_status' => (int) $request->value_status,
         ]);
+
+        // $doctorId = $patientRecord->pat_id->doctor_id;
+        // $doctor=doctor::where('id',$doctorId)->find();
+        // $doctor->value_status=$request->value_status;
+        // $doctor->save();
 
         session()->flash('add', 'تم اضافه المنتج بنجاح');
         return redirect('patientsRecord');
@@ -128,7 +133,9 @@ class PatientRecordController extends Controller
         //استخدم eloquent model
         $patientRecord=patientRecord::where('value_status',1)->get();
         $doctor=doctor::all();
-        return view('records.examined_records',compact('patientRecord','doctor'));
+        return view('patients.patients_record',compact('patientRecord','doctor'));
+
+        // return view('records.patients_record',compact('patientRecord','doctor'));
     }
 
 
@@ -139,7 +146,9 @@ class PatientRecordController extends Controller
         $patientRecord=patientRecord::whereDate('created_at',$today)
         ->get();
         $doctor=doctor::all();
-        return view('records.today_records',compact('patientRecord','doctor'));
+        return view('patients.patients_record',compact('patientRecord','doctor'));
+
+        // return view('records.patients_record',compact('patientRecord','doctor'));
     }
 
 
@@ -149,14 +158,42 @@ $patientRecord = PatientRecord::join('patients','patient_record.patient_id','=',
                 ->whereNotNull('patients.doctor_id')
                 ->get();
 
-$doctor = Doctor::all();
-return view('records.transfered_records', compact('patientRecord', 'doctor'));
+                $doctor = Doctor::all();
+                return view('patients.patients_record',compact('patientRecord','doctor'));
+
+                // return view('records.patients_record', compact('patientRecord', 'doctor'));
     }
     public function toggleStatus($id)
     {
         $patient=patientRecord::FindOrFail($id);
         $patient->value_status=$patient->value_status==1?0:1;//flip لو 1 رجع 0 والعكس
         $patient->save();
+// نجيب كل الدكاترة
+$doctors = Doctor::all();
+
+// لكل دكتور هنعمل الحاجات دي
+foreach ($doctors as $doctor) {
+    // نجيب كل المرضى بتوع الدكتور ده
+    $patients = patients::where('doctor_id', $doctor->id)->get();
+
+    // لو مفيش مرضى، نعدي للدكتور اللي بعده
+    if ($patients->isEmpty()) {
+        continue;
+    }
+
+    // نجيب أرقام المرضى بتوع الدكتور ده
+    $patientIds = $patients->pluck('id')->toArray();
+
+    // نعد كام مريض عنده value_status = 1
+    $examinedCount = PatientRecord::whereIn('patient_id', $patientIds)
+        ->where('value_status', 1)
+        ->count();
+
+    // نحدّث examined_count للدكتور ده
+    $doctor->examined = $examinedCount;
+    $doctor->save();}
+
+
         return response()->json(['value_status' => $patient->value_status]);//استجابة JSON تحتوي على قيمة value_status بعد تحديثها.
     }
 

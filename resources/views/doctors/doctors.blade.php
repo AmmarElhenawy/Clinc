@@ -30,8 +30,8 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{ url('patientsDocRecord/' . $doc->id) }}">سجل المرضى</a>
                             <a class="dropdown-item" href="{{ url('doctorDetails/' . $doc->id) }}">بيانات الدكتور</a>
-                            @can('تعديل حذف')
 
+                            @can('تعديل حذف')
                             <a class="dropdown-item" data-id="{{ $doc->id }}" data-profile=""
                                 data-doctor_full_name="{{ $doc->doctor_full_name }}" data-email="{{ $doc->email }}"
                                 data-phone_number="{{ $doc->phone_number }}" data-specialty="{{ $doc->specialty }}"
@@ -63,7 +63,8 @@
                             <div class="col">
                                 <p>حالات الكشف</p>
                                 {{-- bec withcount --}}
-                                <p class="card-text">{{$doc->patient_count}}</p>
+                                {{-- <p class="card-text">{{$doc->patient_count}}</p> --}}
+                                <p class="card-text">{{$doc->examined}}</p>
                             </div>
                         </div>
 
@@ -332,7 +333,7 @@
             });
         }); --}}
 
-        {
+        {{-- {
             {
                 --{
                 {

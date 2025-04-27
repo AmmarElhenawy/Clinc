@@ -79,6 +79,11 @@
                                                                     {{ $pr->value_status == 1 ? 'كشف' : 'اعاده' }}
                                                                 </button>
                                                                 @endcan
+                                                                @can('عرض الحاله')
+                                                                <span class="{{ $pr->value_status == 1 ? 'text-success' : 'text-danger' }}">
+                                                                    {{ $pr->value_status == 1 ? 'كشف' : 'اعاده' }}
+                                                                </span>
+                                                                @endcan
                                                             </td>
                                                             <td>
                                                                 @can('تحويل الي دوكتور')
@@ -92,6 +97,9 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </form>
+                                                                @endcan
+                                                                @can('عرض الدوكتور')
+                                                                <span>{{ isset($pr->pat_id->doctor_id) ? $pr->pat_id->doc_id->doctor_full_name : '-- لم يتم تحديد دكتور --' }}</span>
                                                                 @endcan
                                                             </td>
                                                             @can('روشته')

@@ -44,6 +44,9 @@ Permission::create(['name' => 'روشته']);//doctor
 Permission::create(['name' => 'الفاتوره المطبوعه']);//nurse
 Permission::create(['name' => 'كشف']);//nurse
 Permission::create(['name' => 'اعاده']);//nurse
+Permission::create(['name' => 'عرض الحاله']);//nurse
+Permission::create(['name' => 'عرض الدوكتور']);//nurse
+Permission::create(['name' => 'زر الطباعه']);//doctor
 
 // إنشاء أدوار
 $admin = Role::create(['name' => 'admin']);
@@ -59,9 +62,12 @@ $admin->givePermissionTo(['اضافه دوكتور',
 'الفاتوره المطبوعه',
 'كشف',
 'اعاده',
+'زر الطباعه',
+// 'عرض الدوكتور',
+// 'عرض الحاله',
 ]);
-$doctor->givePermissionTo(['اضافه دوكتور','حاله الكشف','تحويل الي دوكتور','تعديل حذف','روشته']);
-$nurse->givePermissionTo(['الفاتوره المطبوعه','كشف','اعاده']);
+$doctor->givePermissionTo(['اضافه دوكتور','حاله الكشف','تحويل الي دوكتور','تعديل حذف','روشته','زر الطباعه']);
+$nurse->givePermissionTo(['عرض الدوكتور','عرض الحاله','الفاتوره المطبوعه','كشف','اعاده']);
 
 $user->assignRole('admin');
 $doctor1->assignRole('doctor');

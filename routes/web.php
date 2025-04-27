@@ -25,16 +25,25 @@ Route::resource('doctors', DoctorController::class);
 // Route::prefix('Doctor')->group(function () {
 // });
 
+//->middleware('permission:كشف')
 Route::get('addPatients', [PatientRecordController::class,'show'])->name('addPatients');
+//->middleware('permission:اعاده')
 Route::get('reExamination', [PatientRecordController::class,'showReEx'])->name('reExamination');// X
+
+//->middleware('permission:اعاده')
 Route::get('showPatients', [PatientsController::class,'show'])->name('showPatients');
+
 Route::get('showExamined', [PatientRecordController::class,'showExamined'])->name('showExamined');
 Route::get('showTransfered', [PatientRecordController::class,'showTransfered'])->name('showTransfered');
 Route::get('showTodayRecords', [PatientRecordController::class,'showTodayRec'])->name('showTodayRec');
+
 Route::get('patientsDocRecord/{id}', [DoctorController::class,'patientsDocRecord'])->name('patientsDocRecord');
 Route::get('doctorDetails/{id}', [DoctorController::class,'show'])->name('doctorDetails');
 Route::get('examinedDoctorRecords/{id}', [DoctorController::class,'examinedDocRecord'])->name('examinedDocRecord');
+
+//->middleware('permission:تعديل حذف')
 Route::get('doctorUpdate', [DoctorController::class,'update'])->name('doctorUpdate');
+//->middleware('permission:تعديل حذف')
 Route::get('deleteDoctor/{id}', [DoctorController::class,'destroy'])->name('deleteDoctor');
 
 Route::get('patientDetails/{id}', [PatientsController::class,'showPatientDetails'])->name('patientDetails');
@@ -42,8 +51,12 @@ Route::get('patientRecDetails/{id}', [PatientRecordController::class,'showPatien
 Route::get('editPatients/{id}', [PatientsController::class,'edit'])->name('editPatients');
 Route::get('deletePatients/{id}', [PatientsController::class,'destroy'])->name('deletePatients');
 Route::patch('patients/update/{id}', [PatientsController::class,'update'])->name('patients.update');
+
+//->middleware('permission:روشته')
 Route::get('info/{id}', [PrescriptionController::class,'showInfo'])->name('info');
+//->middleware('permission:روشته')
 Route::get('prescription/{id}', [PrescriptionController::class,'index'])->name('prescription');
+//->middleware('permission:روشته')
 Route::post('addPrescription', [PrescriptionController::class,'store'])->name('addPrescription');
 
 Route::get('printInvoice/{id}', [PrescriptionController::class,'showInvoice'])->name('printInvoice');
@@ -54,7 +67,9 @@ Route::post('doctorProfile', [DoctorDetailsController::class,'store'])->name('do
 Route::post('/toggle-status/{id}', [PatientRecordController::class, 'toggleStatus']);
 Route::post('/toggle-status2/{id}', [DoctorController::class, 'toggleStatus']);
 //flib status
-// التحويلات
+
+// التحويلات تحويل الي دوكتور
+//->middleware('permission:تحويل الي دوكتور')
 Route::patch('/transfereToDoctor/{id}', [PatientsController::class, 'transToDoctor'])->name('transfereToDoctor');
 // التحويلات
 
